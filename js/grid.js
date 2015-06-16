@@ -3,23 +3,14 @@ function Grid(height,width) {
   this.height = height;
   this.width = width;
 
-  this.draw = function(parent,clickEvent, colors) {
-
-    // var ratioW = Math.floor((window.innerWidth || document.documentElement.offsetWidth) / this.width);
-    // var ratioH = Math.floor((window.innerHeight || document.documentElement.offsetHeight) / this.height);
+  this.draw = function(parent, eventType, eventCallback, colors) {
 
     var style = getComputedStyle(parent);
 
-    // var ratioW = 600 / this.width;
-    // var ratioH = 600 / this.height;
-
     var ratioW = Math.floor((style.width.slice(0,style.width.length-2) * 0.8) / this.width);
-    //var ratioW = Math.floor(style.width.slice(0,style.width.length-2) / (this.width+2));
-    //var ratioH = Math.floor(style.height.slice(0,style.height.length-2) / this.height);
 
     var grid = document.createElement('div');
     grid.className = 'grid';
-    //grid.style.width = (ratioW * this.width) + 'px';
     grid.style.width = style.width;
     grid.style.height = (ratioW * this.height) + 'px';
 
@@ -43,7 +34,12 @@ function Grid(height,width) {
             }
             cell.style.border = '1px solid black';
 
-            cell.addEventListener('click', clickEvent);
+            if(eventType = "mousedown") {
+              cell.addEventListener('mousedown', eventCallback);
+            }
+            if(eventType = "mousein") {
+              cell.addEventListener('mousein', eventCallback);
+            }
             row.appendChild(cell);
         }
 
