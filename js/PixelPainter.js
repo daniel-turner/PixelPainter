@@ -1,7 +1,7 @@
 window.onload = function() {
 
-  var picker = new Grid(10,10);
-  var pickerContainer = document.getElementById('pixelPainter');
+  var picker = new Grid(15,15);
+  var pickerContainer = document.getElementById('toolMenu');
 
   picker.draw(pickerContainer);
 }
