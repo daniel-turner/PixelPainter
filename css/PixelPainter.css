@@ -3,12 +3,20 @@
 }
 
 #toolMenu {
-  width: 300px;
+  width: 150px;
   height: 600px;
+  float: left;
 }
 
 #canvas {
 
-  width: 80%;
-  border: '1px solid black';
+  width: 600px;
+  height: 600px;
+  float: left;
+
+}
+
+.cell {
+
+  float: left;
 }
