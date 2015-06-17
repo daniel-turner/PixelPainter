@@ -3,7 +3,7 @@ function Grid(height,width) {
   this.height = height;
   this.width = width;
 
-  this.draw = function(parent, eventType, eventCallback, colors) {
+  this.draw = function(parent, eventCallback, colors) {
 
     var style = getComputedStyle(parent);
 
@@ -34,12 +34,13 @@ function Grid(height,width) {
             }
             cell.style.border = '1px solid black';
 
-            if(eventType = "mousedown") {
-              cell.addEventListener('mousedown', eventCallback);
-            }
-            if(eventType = "mousein") {
-              cell.addEventListener('mousein', eventCallback);
-            }
+            cell.addEventListener('mouseover', eventCallback);
+            cell.addEventListener('click', eventCallback);
+            cell.addEventListener('mousedown', eventCallback);
+            cell.addEventListener('mouseup', eventCallback);
+            cell.addEventListener('mousein', eventCallback);
+            cell.addEventListener('mouseout', eventCallback);
+
             row.appendChild(cell);
         }
 
