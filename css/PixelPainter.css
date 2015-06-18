@@ -1,22 +1,103 @@
+body {
+
+  background-color: #2B2620;
+
+
+}
 #pixelPainter {
-  width: 100%;
+
+  background-color: #DFE4BD;
+  font-family: 'Roboto Slab', serif;
+  font-size: 18;
+  height: 600px;
 }
 
 #toolMenu {
-  width: 150px;
+  width: 200px;
   height: 600px;
+  display: inline-block;
+  /*padding: 30px 20px 140px 20px;*/
+  background-color: #2B2620;
+  /*height: 600px;*/
   float: left;
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+#titleSpan {
+
+  color: #FE642E;
+  background-image: url('../images/logo.svg');
+  background-size: 17px;
+  background-position: 3;
+  background-repeat: no-repeat;
+  text-align: right;
+  width: 166px;
+  margin-bottom: 20px;
+}
+
+#startOverButton {
+
+  color: #DFE4BD;
+  border-color: #DFE4BD;
+  border: 1px solid;
+  width: 146px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14px;
+  padding: 10px;
+}
+
+#lowerToolContainer {
+
+  width: 146px;
+  margin-top: 20px;
+}
+
+#deleteButton {
+
+  background-image: url('../images/red-slash.svg');
+  background-repeat: no-repeat;
+  background-color: white;
+  height: 26px;
+  width: 26px;
+  margin-left: 1px;
+  float: left;
+
+}
+
+#undoButton {
+
+  background-image: url('../images/undo.svg');
+  background-size: 15px;
+  background-position: 4px 5px;
+  background-repeat: no-repeat;
+  float: right;
+  color: #DFE4BD;
+  border-color: #DFE4BD;
+  border: 1px solid;
+  width: 60px;
+  height: 5px;
+  text-align: right;
+  font-size: 14px;
+  padding: 10px;
+  margin-right: -22px;
+  line-height: 5px;
 }
 
 #canvas {
 
   width: 600px;
-  height: 600px;
-  float: left;
-
+  display: inline-block;
+  /*height: 600px;
+  float: left;*/
+  padding-left: 30px;
+  padding-top: 30px;
 }
 
 .cell {
 
   float: left;
+  background-color: #FFFFFF;
+  border-color: #2B2620;
 }

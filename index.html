@@ -3,14 +3,20 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="js/PixelPainter.js"></script>
     <link href="css/PixelPainter.css" rel="stylesheet" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <h1>Pixel Painter</h1>
+    <!-- <h1>Pixel Painter</h1> -->
     <div id="pixelPainter">
-      <div id="toolMenu"></div>
-      <div id="canvas"></div>
+      <!-- <div id="toolMenu"></div>
+      <div id="canvas"></div> -->
     </div>
     <script src="js/PixelPainter.js" type="text/javascript"></script>
     <script src="js/grid.js" type="text/javascript"></script>
+    <script>
+      window.onload = function() {
+        var painter = new PixelPainter(15,15);
+      };
+    </script>
   </body>
 </html>

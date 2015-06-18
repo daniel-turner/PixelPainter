@@ -48,5 +48,7 @@ function Grid(height,width) {
     }
 
     parent.appendChild(grid);
+
+    return grid;
   };
 };
