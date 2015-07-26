@@ -29,7 +29,7 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
   ];
 
   // from http://stackoverflow.com/questions/1740700/how-to-get-hex-color-value-rather-than-rgb-value
-  function rgb2hex(rgb) {
+  var rgb2hex = function(rgb) {
 
     rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
 
@@ -41,6 +41,100 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
     return hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
     // return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
   };
+
+  var rebuildSavedGrid = function() {
+
+    var hashIndex = window.location.hash.indexOf("#");
+    var savedGridString = null
+
+    if(hashIndex !== -1) {
+
+      savedGridString = window.location.hash.substring(hashIndex + 1);
+
+      var colors = savedGridString.match(/.{6}/g);
+
+      $('#canvas .grid').children().each(function() {
+
+        $(this).children().each(function() {
+
+          $(this).css('background-color', "#" + colors.shift());
+        })
+
+      });
+
+    }
+  };
+
+  var saveGrid = function() {
+
+    var canvasRows = $('#canvas').find('.row');
+    var rows = [];
+
+    canvasRows.each(function() {
+
+      var row = [];
+
+      $(this).children().each(function() {
+
+        // var value = $(this).css('background-color');
+        var value = $(this).css('background-color');
+
+        value = rgb2hex(value);
+        row.push(value);
+      });
+
+      rows.push(row);
+    });
+
+    var gridString = "";
+
+    for(var i = 0; i < rows.length; i++) {
+
+      for(var j = 0; j < rows[i].length; j++) {
+
+        gridString += rows[i][j];
+      }
+    }
+
+    // gridString = compress(gridString);
+
+    window.location.href = "/#" + gridString;
+
+  };
+
+  // var compress = function(uncompressedString) {
+
+  //   var replacementString = "";
+  //   var index = 0;
+  //   var prev;
+  //   var curr;
+  //   var alikeCount = 0;
+
+  //   while(index < uncompressedString.length) {
+
+  //     prev = uncompressedString[index];
+
+  //     index++;
+
+  //     curr = uncompressedString[index];
+
+  //     if(prev === curr) {
+
+  //       alikeCount++;
+
+  //     } else {
+
+  //       if(alikeCount > 4) {
+
+  //         //compress and replace
+  //       }
+
+  //       alikeCount = 0;
+  //     }
+  //   }
+
+  //   return string;
+  // }
 
   //mouse events
   var pickerEvent = function(event) {
@@ -149,41 +243,9 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
   var saveButton = document.createElement('div');
   saveButton.id = 'saveButton';
   saveButton.innerHTML = "SAVE";
-  //SAVE ACTION **********************************************************
   saveButton.addEventListener('click', function() {
 
-    var canvasRows = $('#canvas').find('.row');
-    var rows = [];
-
-    canvasRows.each(function() {
-
-      var row = [];
-
-      $(this).children().each(function() {
-
-        // var value = $(this).css('background-color');
-        var value = $(this).css('background-color');
-
-        value = rgb2hex(value);
-        row.push(value);
-      });
-
-      rows.push(row);
-    });
-
-    var gridString = "";
-
-    for(var i = 0; i < rows.length; i++) {
-
-      for(var j = 0; j < rows[i].length; j++) {
-
-        gridString += rows[i][j];
-      }
-
-      // gridString += ";";
-    }
-
-    window.location.href = "/#" + gridString;
+    saveGrid();
   });
 
   lowerToolContainer.appendChild(saveButton);
@@ -212,44 +274,5 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
 
   toolMenu.appendChild(lowerToolContainer);
 
-  var hrefIndex = window.location.href.indexOf("/#");
-  var savedGridString = null
-
-  if(hrefIndex !== -1) {
-
-    savedGridString = window.location.href.substring(hrefIndex + 2);
-
-    // console.log(savedGridString);
-
-    // var savedRows = savedGridString.split(";");
-    // var rows = [];
-
-    // for(var i = 0; i < savedRows.length; i++) {
-
-    //   var row = savedRows[i].match(/.{6}/g);
-    //   rows.push(row);
-    // }
-
-    // rows.pop(); //removes last row array containing ';'
-    //
-    var colors = savedGridString.match(/.{6}/g);
-
-    // console.log(colors);
-    //
-    console.log($('#canvas .grid').children());
-
-    $('#canvas .grid').children().each(function() {
-
-      // console.log($(this));
-
-      $(this).children().each(function() {
-
-        // console.log($(this));
-
-        $(this).css('background-color', "#" + colors.shift());
-      })
-
-    });
-
-  }
+  rebuildSavedGrid();
 };
