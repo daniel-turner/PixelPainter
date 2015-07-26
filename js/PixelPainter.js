@@ -28,6 +28,20 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
     "000000"
   ];
 
+  // from http://stackoverflow.com/questions/1740700/how-to-get-hex-color-value-rather-than-rgb-value
+  function rgb2hex(rgb) {
+
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+
+    function hex(x) {
+
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+
+    return hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    // return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  };
+
   //mouse events
   var pickerEvent = function(event) {
 
@@ -91,7 +105,6 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
   });
 
   //runner
-
   var container = document.querySelector('#pixelPainter');
 
   //title
@@ -133,6 +146,48 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
   lowerToolContainer.appendChild(deleteButton);
   lowerToolContainer.appendChild(undoButton);
 
+  var saveButton = document.createElement('div');
+  saveButton.id = 'saveButton';
+  saveButton.innerHTML = "SAVE";
+  //SAVE ACTION **********************************************************
+  saveButton.addEventListener('click', function() {
+
+    var canvasRows = $('#canvas').find('.row');
+    var rows = [];
+
+    canvasRows.each(function() {
+
+      var row = [];
+
+      $(this).children().each(function() {
+
+        // var value = $(this).css('background-color');
+        var value = $(this).css('background-color');
+
+        value = rgb2hex(value);
+        row.push(value);
+      });
+
+      rows.push(row);
+    });
+
+    var gridString = "";
+
+    for(var i = 0; i < rows.length; i++) {
+
+      for(var j = 0; j < rows[i].length; j++) {
+
+        gridString += rows[i][j];
+      }
+
+      // gridString += ";";
+    }
+
+    window.location.href = "/#" + gridString;
+  });
+
+  lowerToolContainer.appendChild(saveButton);
+
   //tool menu
   var toolMenu = document.createElement('div');
   toolMenu.id = 'toolMenu';
@@ -157,6 +212,44 @@ var PixelPainter = function(canvasHeight,canvasWidth) {
 
   toolMenu.appendChild(lowerToolContainer);
 
+  var hrefIndex = window.location.href.indexOf("/#");
+  var savedGridString = null
+
+  if(hrefIndex !== -1) {
+
+    savedGridString = window.location.href.substring(hrefIndex + 2);
+
+    // console.log(savedGridString);
+
+    // var savedRows = savedGridString.split(";");
+    // var rows = [];
+
+    // for(var i = 0; i < savedRows.length; i++) {
+
+    //   var row = savedRows[i].match(/.{6}/g);
+    //   rows.push(row);
+    // }
+
+    // rows.pop(); //removes last row array containing ';'
+    //
+    var colors = savedGridString.match(/.{6}/g);
+
+    // console.log(colors);
+    //
+    console.log($('#canvas .grid').children());
+
+    $('#canvas .grid').children().each(function() {
+
+      // console.log($(this));
+
+      $(this).children().each(function() {
+
+        // console.log($(this));
+
+        $(this).css('background-color', "#" + colors.shift());
+      })
+
+    });
+
+  }
 };
-
-
